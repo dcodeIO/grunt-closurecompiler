@@ -1,0 +1,38 @@
+{
+    "name": "grunt-closurecompiler",
+    "description": "The ClosureCompiler.js Grunt Task",
+    "version": "0.9.0",
+    "author": {
+        "name": "Daniel Wirtz",
+        "email": "dcode@dcode.io"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/dcodeIO/grunt-closurecompiler.git"
+    },
+    "bugs": {
+        "url": "https://github.com/dcodeIO/grunt-closurecompiler/issues"
+    },
+    "license": "Apache License, Version 2.0",
+    "main": "Gruntfile.js",
+    "dependencies": {
+        "closurecompiler": ">=1.0.7"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "devDependencies": {
+        "grunt-contrib-clean": "~0.4.0",
+        "grunt-contrib-nodeunit": "~0.1.2",
+        "grunt": "~0.4.0"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.0"
+    },
+    "keywords": [
+        "gruntplugin", "closure compiler"
+    ]
+}
