@@ -38,7 +38,6 @@ module.exports = function (grunt) {
             if (to) { clearTimeout(to); to = null; }
             
             var sources = file.src;
-            console.log(require("util").inspect(sources));
             var dest = file.dest;
             
             grunt.log.subhead("Compiling "+file.src+" -> "+dest);
@@ -54,7 +53,7 @@ module.exports = function (grunt) {
                         if (error) {
                             grunt.log.warn(""+error);
                         }
-                        grunt.log.ok(""+sources);
+                        grunt.log.ok("Complete.");
                     } else {
                         grunt.log.error(""+sources);
                     }
