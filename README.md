@@ -19,6 +19,7 @@ grunt.initConfig({
         }
     },
 });
+```
 
 See also: [Gruntfile.js](https://github.com/dcodeIO/grunt-closurecompiler/blob/master/Gruntfile.js)
 
