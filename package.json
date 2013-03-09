@@ -22,7 +22,7 @@
         "node": ">=0.8.0"
     },
     "scripts": {
-        "test": "grunt test"
+        "test": "nodeunit test/closurecompiler_test.js"
     },
     "devDependencies": {
         "grunt-contrib-clean": "~0.4.0",
