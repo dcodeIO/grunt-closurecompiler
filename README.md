@@ -1,4 +1,4 @@
-The [ClosureCompiler.js](https://github.com/dcodeIO/ClosureCompiler.js) Grunt Task
+The ClosureCompiler.js Grunt Task [![Build Status](https://travis-ci.org/dcodeIO/grunt-closurecompiler.png?branch=master)](https://travis-ci.org/dcodeIO/grunt-closurecompiler)
 =================================
 Yet simple, but powerful. Available through [npm](https://npmjs.org/package/grunt-closurecompiler).
 
