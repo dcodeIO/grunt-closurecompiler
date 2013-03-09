@@ -8,7 +8,7 @@ Usage
 ```javascript
 grunt.initConfig({
     closurecompiler: {
-        compile: {
+        minify: {
             files: {
                 // Destination: Sources...
                 "Gruntfile.min.js": [__filename]
@@ -20,6 +20,12 @@ grunt.initConfig({
         }
     },
 });
+
+grunt.registerTask('minify', ['closurecompiler:minify']);
+```
+
+```bash
+grunt minify
 ```
 
 See also: [Gruntfile.js](https://github.com/dcodeIO/grunt-closurecompiler/blob/master/Gruntfile.js)
