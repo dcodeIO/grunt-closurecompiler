@@ -24,9 +24,7 @@ grunt.initConfig({
 grunt.registerTask('minify', ['closurecompiler:minify']);
 ```
 
-```bash
-grunt minify
-```
+**Run it:** `grunt minify`
 
 See also: [Gruntfile.js](https://github.com/dcodeIO/grunt-closurecompiler/blob/master/Gruntfile.js)
 
