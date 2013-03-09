@@ -8,13 +8,14 @@ Usage
 ```javascript
 grunt.initConfig({
     closurecompiler: {
-        test: {
+        compile: {
             files: {
+                // Destination: Sources...
                 "Gruntfile.min.js": [__filename]
             },
             options: {
+                // Any options supported by Closure Compiler, for example:
                 "compilation_level": "SIMPLE_OPTIMIZATIONS"
-                // ...plus any other options supported by Closure Compiler
             }
         }
     },
