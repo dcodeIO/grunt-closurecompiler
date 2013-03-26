@@ -23,25 +23,30 @@
 'use strict';
 
 module.exports = function (grunt) {
-    
+
     grunt.registerMultiTask('closurecompiler', 'Compile through ClosureCompiler.js', function () {
         var options = this.options({
             "compilation_level": "SIMPLE_OPTIMIZATIONS"
         });
-        
+
         var ClosureCompiler = require("closurecompiler");
         var done = this.async();
         var running = 0;
         var to = null;
-        
+
+        if (this.files.length === 0) {
+            done();
+            return;
+        }
+
         this.files.forEach(function(file) {
             if (to) { clearTimeout(to); to = null; }
-            
+
             var sources = file.src;
             var dest = file.dest;
-            
+
             grunt.log.subhead("Compiling "+file.src+" -> "+dest);
-            
+
             if (sources.length == 0 || !dest) {
                 grunt.log.error("Please provide at least one source and exactly one destination file.");
                 to = setTimeout(maybeFinish, 1000);
@@ -62,7 +67,7 @@ module.exports = function (grunt) {
                 });
             }
         });
-        
+
         var finished = false;
         function maybeFinish() {
             if (running == 0) {
