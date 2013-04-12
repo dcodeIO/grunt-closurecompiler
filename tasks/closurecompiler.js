@@ -60,7 +60,7 @@ module.exports = function (grunt) {
                         }
                         grunt.log.ok("Complete.");
                     } else {
-                        grunt.log.error(""+sources);
+                        grunt.log.error(""+error);
                     }
                     running--;
                     to = setTimeout(maybeFinish, 1000);
