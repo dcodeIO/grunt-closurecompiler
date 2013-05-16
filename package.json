@@ -1,7 +1,7 @@
 {
     "name": "grunt-closurecompiler",
     "description": "The ClosureCompiler.js Grunt Task",
-    "version": "0.9.3",
+    "version": "0.9.4",
     "author": {
         "name": "Daniel Wirtz",
         "email": "dcode@dcode.io"
