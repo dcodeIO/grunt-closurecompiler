@@ -25,14 +25,10 @@
 var grunt = require('grunt');
 
 exports.closurecompiler = {
-    
-    setUp: function (done) {
-        done();
-    },
 
     "Gruntfile.min.js": function (test) {
         test.doesNotThrow(function() {
-            var src = grunt.file.read("Gruntfile.min.js");
+            var src = grunt.file.read(__dirname+"/../Gruntfile.js");
             test.ok(src.indexOf("grunt-closurecompiler (c)") >= 0);
         });
         test.done();
