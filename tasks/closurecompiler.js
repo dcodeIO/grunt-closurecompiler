@@ -54,13 +54,15 @@ module.exports = function (grunt) {
                 running++;
                 ClosureCompiler.compile(sources, options, function(error, result) {
                     if (result) {
-                        grunt.file.write(dest, ""+result);
+                        grunt.file.write(dest, result=""+result);
                         if (error) {
                             grunt.log.warn(""+error);
                         }
-                        grunt.log.ok("Complete.");
-                    } else {
+                        grunt.log.ok("Complete: "+result.length);
+                    } else if (error) {
                         grunt.fail.warn(error);
+                    } else {
+                        grunt.log.ok("Complete: no output");
                     }
                     running--;
                     to = setTimeout(maybeFinish, 1000);
