@@ -25,9 +25,19 @@
 module.exports = function (grunt) {
 
     grunt.registerMultiTask('closurecompiler', 'Compile through ClosureCompiler.js', function () {
+
         var options = this.options({
-            "compilation_level": "SIMPLE_OPTIMIZATIONS"
+            "compilation_level": "SIMPLE_OPTIMIZATIONS",
+            "max_processes": Number.MAX_VALUE
         });
+
+        var maxProcesses = options.max_processes;
+        delete options.max_processes;
+
+        if (maxProcesses < 1) {
+            grunt.log.warn("max_processes must be at least 1");
+            maxProcesses = 1;
+        }
 
         var ClosureCompiler = require("closurecompiler");
         var done = this.async();
@@ -39,46 +49,45 @@ module.exports = function (grunt) {
             return;
         }
 
-        this.files.forEach(function(file) {
-            if (to) { clearTimeout(to); to = null; }
+        var next = 0;
 
-            var sources = file.src;
-            var dest = file.dest;
+        var startClosure = function() {
 
-            grunt.log.subhead("Compiling "+file.src+" -> "+dest);
+            while(next < this.files.length && running < maxProcesses) {
+                var file = this.files[next++];
+                var sources = file.src;
+                var dest = file.dest;
 
-            if (sources.length == 0 || !dest) {
-                grunt.log.error("Please provide at least one source and exactly one destination file.");
-                to = setTimeout(maybeFinish, 1000);
-            } else {
-                running++;
-                ClosureCompiler.compile(sources, options, function(error, result) {
-                    if (result) {
-                        grunt.file.write(dest, result=""+result);
-                        if (error) {
-                            grunt.log.warn(""+error);
+                grunt.log.subhead("Compiling "+sources+" -> "+dest);
+
+                if (sources.length === 0 || !dest) {
+                    grunt.log.error("Please provide at least one source and exactly one destination file.");
+                } else {
+                    running++;
+                    ClosureCompiler.compile(sources, options, function(error, result) {
+                        if (result) {
+                            grunt.file.write(dest, result=""+result);
+                            if (error) {
+                                grunt.log.warn(""+error);
+                            }
+                            grunt.log.ok("Complete: "+result.length);
+                        } else if (error) {
+                            grunt.fail.warn(error);
+                        } else {
+                            grunt.log.ok("Complete: no output");
                         }
-                        grunt.log.ok("Complete: "+result.length);
-                    } else if (error) {
-                        grunt.fail.warn(error);
-                    } else {
-                        grunt.log.ok("Complete: no output");
-                    }
-                    running--;
-                    to = setTimeout(maybeFinish, 1000);
-                });
-            }
-        });
-
-        var finished = false;
-        function maybeFinish() {
-            if (running == 0) {
-                if (!finished) {
-                    finished = true;
-                    done();
+                        running--;
+                        startClosure(); /* When a process exits, see if we can start more */
+                    });
                 }
             }
-        }
+
+            if (running === 0) {
+                done();
+            }
+        }.bind(this);
+
+        startClosure();
     });
 
 };
