@@ -15,7 +15,10 @@ grunt.initConfig({
             },
             options: {
                 // Any options supported by Closure Compiler, for example:
-                "compilation_level": "SIMPLE_OPTIMIZATIONS"
+                "compilation_level": "SIMPLE_OPTIMIZATIONS",
+                
+                // Plus a simultaneous processes limit
+                "max_processes": 5
             }
         }
     },
