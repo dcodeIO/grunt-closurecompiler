@@ -28,8 +28,7 @@ module.exports = function (grunt) {
 
         var options = this.options({
             "compilation_level": "SIMPLE_OPTIMIZATIONS",
-            "max_processes": Number.MAX_VALUE,
-            "banner": ""
+            "max_processes": Number.MAX_VALUE
         });
         var banner = "";
 
