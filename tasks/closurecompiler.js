@@ -28,8 +28,15 @@ module.exports = function (grunt) {
 
         var options = this.options({
             "compilation_level": "SIMPLE_OPTIMIZATIONS",
-            "max_processes": Number.MAX_VALUE
+            "max_processes": Number.MAX_VALUE,
+            "banner": ""
         });
+        var banner = "";
+
+        if (options.banner !== undefined) {
+            banner = options.banner+"\n";
+            delete options.banner;
+        }
 
         var maxProcesses = options.max_processes;
         delete options.max_processes;
@@ -66,7 +73,7 @@ module.exports = function (grunt) {
                     running++;
                     ClosureCompiler.compile(sources, options, function(error, result) {
                         if (result) {
-                            grunt.file.write(dest, result=""+result);
+                            grunt.file.write(dest, result=banner+result);
                             if (error) {
                                 grunt.log.warn(""+error);
                             }
