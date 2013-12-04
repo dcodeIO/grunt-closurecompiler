@@ -18,7 +18,10 @@ grunt.initConfig({
                 "compilation_level": "SIMPLE_OPTIMIZATIONS",
                 
                 // Plus a simultaneous processes limit
-                "max_processes": 5
+                "max_processes": 5,
+
+                // And an option to add a banner, license or similar on top
+                "banner": "/* hello world! */"
             }
         }
     },
