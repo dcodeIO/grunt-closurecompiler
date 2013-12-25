@@ -60,32 +60,34 @@ module.exports = function (grunt) {
         var startClosure = function() {
 
             while(next < this.files.length && running < maxProcesses) {
-                var file = this.files[next++];
-                var sources = file.src;
-                var dest = file.dest;
+                (function() {
+                    var file = this.files[next++];
+                    var sources = file.src;
+                    var dest = file.dest;
 
-                grunt.log.subhead("Compiling "+sources+" -> "+dest);
+                    grunt.log.subhead("Compiling "+sources+" -> "+dest);
 
-                if (sources.length === 0 || !dest) {
-                    grunt.log.error("Please provide at least one source and exactly one destination file.");
-                } else {
-                    running++;
-                    ClosureCompiler.compile(sources, options, function(error, result) {
-                        if (result) {
-                            grunt.file.write(dest, result=banner+result);
-                            if (error) {
-                                grunt.log.warn(""+error);
+                    if (sources.length === 0 || !dest) {
+                        grunt.log.error("Please provide at least one source and exactly one destination file.");
+                    } else {
+                        running++;
+                        ClosureCompiler.compile(sources, options, function(error, result) {
+                            if (result) {
+                                grunt.file.write(dest, result=banner+result);
+                                if (error) {
+                                    grunt.log.warn(""+error);
+                                }
+                                grunt.log.ok("Complete: "+result.length);
+                            } else if (error) {
+                                grunt.fail.warn(error);
+                            } else {
+                                grunt.log.ok("Complete: no output");
                             }
-                            grunt.log.ok("Complete: "+result.length);
-                        } else if (error) {
-                            grunt.fail.warn(error);
-                        } else {
-                            grunt.log.ok("Complete: no output");
-                        }
-                        running--;
-                        startClosure(); /* When a process exits, see if we can start more */
-                    });
-                }
+                            running--;
+                            startClosure(); /* When a process exits, see if we can start more */
+                        });
+                    }
+                }).call(this);
             }
 
             if (running === 0) {
