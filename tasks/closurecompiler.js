@@ -60,8 +60,7 @@ module.exports = function (grunt) {
         var startClosure = function() {
 
             while(next < this.files.length && running < maxProcesses) {
-                (function() {
-                    var file = this.files[next++];
+                (function(file) {
                     var sources = file.src;
                     var dest = file.dest;
 
@@ -84,10 +83,10 @@ module.exports = function (grunt) {
                                 grunt.log.ok("Complete: no output");
                             }
                             running--;
-                            startClosure(); /* When a process exits, see if we can start more */
+                            startClosure(); // When a process exits, see if we can start more
                         });
                     }
-                }).call(this);
+                })(this.files[next++]);
             }
 
             if (running === 0) {
